@@ -51,7 +51,7 @@ const createMainFilterTemplate = () => {
   );
 };
 
-const createFilmsContanerTemplate = () => {
+const createFilmsSectionTemplate = () => {
   return (
     `<section class="films">
     </section>`
@@ -114,25 +114,42 @@ const createMostCommentedFilmsTemplate = () => {
 };
 
 
+// Site header
 renderComponent(siteHeaderElement, createHeaderProfileTemplate());
+
+
+// Main navigation and sorting
 renderComponent(siteMainElement, createMainNavigationTemplate());
 renderComponent(siteMainElement, createMainFilterTemplate());
-renderComponent(siteMainElement, createFilmsContanerTemplate());
 
-const filmsContainer = siteMainElement.querySelector(`section.films`);
 
-renderComponent(filmsContainer, createFilmsListContainerTemplate());
+// Films catalog
 
-const filmsListContainer = filmsContainer.querySelector(`.films-list__container`);
+// Basic films
+renderComponent(siteMainElement, createFilmsSectionTemplate());
 
-renderComponentNTimes(filmsListContainer, createFilmCardTemplate(), FILMS_COUNT);
-renderComponent(filmsListContainer, createShowMoreButtonTemplate());
+const filmsElement = siteMainElement.querySelector(`section.films`);
 
-renderComponent(filmsContainer, createTopRatedFilmsTemplate());
-renderComponent(filmsContainer, createMostCommentedFilmsTemplate());
+renderComponent(filmsElement, createFilmsListContainerTemplate());
 
-const topRatedFilmsList = filmsContainer.querySelector(`#top-rated-films-list`);
-const mostCommentedFilmsList = filmsContainer.querySelector(`#most-commented-films-list`);
+const filmsListElement = filmsElement.querySelector(`.films-list`);
+const filmsListContainerElement = filmsListElement.querySelector(`.films-list__container`);
 
-renderComponentNTimes(topRatedFilmsList, createFilmCardTemplate(), TOP_RATED_FILMS_COUNT);
-renderComponentNTimes(mostCommentedFilmsList, createFilmCardTemplate(), MOST_COMMENTED_FILMS_COUNT);
+renderComponentNTimes(filmsListContainerElement, createFilmCardTemplate(), FILMS_COUNT);
+renderComponent(filmsListElement, createShowMoreButtonTemplate());
+
+
+//  Top rated films
+renderComponent(filmsElement, createTopRatedFilmsTemplate());
+
+const topRatedFilmsListElement = filmsElement.querySelector(`#top-rated-films-list`);
+
+renderComponentNTimes(topRatedFilmsListElement, createFilmCardTemplate(), TOP_RATED_FILMS_COUNT);
+
+
+//  Most commented films
+renderComponent(filmsElement, createMostCommentedFilmsTemplate());
+
+const mostCommentedFilmsListElement = filmsElement.querySelector(`#most-commented-films-list`);
+
+renderComponentNTimes(mostCommentedFilmsListElement, createFilmCardTemplate(), MOST_COMMENTED_FILMS_COUNT);
