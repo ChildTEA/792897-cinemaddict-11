@@ -1,6 +1,8 @@
 'use strict';
 
 const FILMS_COUNT = 5;
+const TOP_RATED_FILMS_COUNT = 2;
+const MOST_COMMENTED_FILMS_COUNT = 2;
 
 const siteHeaderElement = document.querySelector(`body .header`);
 const siteMainElement = document.querySelector(`body .main`);
@@ -93,6 +95,24 @@ const createShowMoreButtonTemplate = () => {
   );
 };
 
+const createTopRatedFilmsTemplate = () => {
+  return (
+    `<section class="films-list--extra">
+      <h2 class="films-list__title">Top rated</h2>
+      <div class="films-list__container" id="top-rated-films-list"></div>
+    </section>`
+  );
+};
+
+const createMostCommentedFilmsTemplate = () => {
+  return (
+    `<section class="films-list--extra">
+      <h2 class="films-list__title">Most commented</h2>
+      <div class="films-list__container" id="most-commented-films-list"></div>
+    </section>`
+  );
+};
+
 
 renderComponent(siteHeaderElement, createHeaderProfileTemplate());
 renderComponent(siteMainElement, createMainNavigationTemplate());
@@ -107,3 +127,12 @@ const filmsListContainer = filmsContainer.querySelector(`.films-list__container`
 
 renderComponentNTimes(filmsListContainer, createFilmCardTemplate(), FILMS_COUNT);
 renderComponent(filmsListContainer, createShowMoreButtonTemplate());
+
+renderComponent(filmsContainer, createTopRatedFilmsTemplate());
+renderComponent(filmsContainer, createMostCommentedFilmsTemplate());
+
+const topRatedFilmsList = filmsContainer.querySelector(`#top-rated-films-list`);
+const mostCommentedFilmsList = filmsContainer.querySelector(`#most-commented-films-list`);
+
+renderComponentNTimes(topRatedFilmsList, createFilmCardTemplate(), TOP_RATED_FILMS_COUNT);
+renderComponentNTimes(mostCommentedFilmsList, createFilmCardTemplate(), MOST_COMMENTED_FILMS_COUNT);
