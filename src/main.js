@@ -4,6 +4,7 @@ const FILMS_COUNT = 5;
 const TOP_RATED_FILMS_COUNT = 2;
 const MOST_COMMENTED_FILMS_COUNT = 2;
 
+const siteBodyElement = document.querySelector(`body`);
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
 
@@ -103,8 +104,7 @@ const createMostCommentedFilmsTemplate = () => {
   );
 };
 
-/*
-const createFilmDetailsPopupTemplare = () => {
+const createFilmDetailsPopupTemplate = () => {
   return (
     `<section class="film-details">
       <form class="film-details__inner" action="" method="get">
@@ -277,7 +277,6 @@ const createFilmDetailsPopupTemplare = () => {
     </section>`
   );
 };
-*/
 
 
 // Site header
@@ -318,3 +317,6 @@ renderComponent(filmsElement, createMostCommentedFilmsTemplate());
 const mostCommentedFilmsListElement = filmsElement.querySelector(`#most-commented-films-list`);
 
 renderComponentNTimes(mostCommentedFilmsListElement, createFilmCardTemplate(), MOST_COMMENTED_FILMS_COUNT);
+
+// Popup
+renderComponent(siteBodyElement, createFilmDetailsPopupTemplate());
