@@ -41,16 +41,6 @@ const createMainNavigationTemplate = () => {
   );
 };
 
-const createMainFilterTemplate = () => {
-  return (
-    `<ul class="sort">
-      <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
-      <li><a href="#" class="sort__button">Sort by date</a></li>
-      <li><a href="#" class="sort__button">Sort by rating</a></li>
-    </ul>`
-  );
-};
-
 const createFilmsSectionTemplate = () => {
   return (
     `<section class="films">
@@ -294,9 +284,8 @@ const createFilmDetailsPopupTemplare = () => {
 renderComponent(siteHeaderElement, createHeaderProfileTemplate());
 
 
-// Main navigation and sorting
+// Main navigation
 renderComponent(siteMainElement, createMainNavigationTemplate());
-renderComponent(siteMainElement, createMainFilterTemplate());
 
 
 // Films catalog
