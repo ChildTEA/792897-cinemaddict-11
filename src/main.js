@@ -4,8 +4,8 @@ const FILMS_COUNT = 5;
 const TOP_RATED_FILMS_COUNT = 2;
 const MOST_COMMENTED_FILMS_COUNT = 2;
 
-const siteHeaderElement = document.querySelector(`body .header`);
-const siteMainElement = document.querySelector(`body .main`);
+const siteHeaderElement = document.querySelector(`.header`);
+const siteMainElement = document.querySelector(`.main`);
 
 
 const renderComponent = (container, template, place = `beforeend`) => {
