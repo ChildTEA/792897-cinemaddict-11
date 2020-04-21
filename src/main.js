@@ -1,4 +1,3 @@
-import {getRandomArrayItems} from './util.js';
 import {generateFilms} from './mock/films.js';
 import {generateFilters} from './mock/filter.js';
 
@@ -13,7 +12,8 @@ import {createShowMoreButtonTemplate} from './components/show-more-button.js';
 import {createTopRatedFilmsTemplate} from './components/top-rated-films.js';
 
 const FILMS_COUNT = 20;
-const GENERAL_FILMS_COUNT = 5;
+const SHOWING_FILMS_ON_START_COUNT = 5;
+const SHOWING_FILMS_BY_BUTTON_COUNT = 5;
 const TOP_RATED_FILMS_COUNT = 2;
 const MOST_COMMENTED_FILMS_COUNT = 2;
 
@@ -22,8 +22,6 @@ const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
 
 const films = generateFilms(FILMS_COUNT);
-
-const generalFilms = getRandomArrayItems(films, GENERAL_FILMS_COUNT);
 
 const topRatedFilms = films
   .sort((a, b) => {
@@ -62,10 +60,29 @@ renderComponent(filmsElement, createFilmsListContainerTemplate());
 const filmsListElement = filmsElement.querySelector(`.films-list`);
 const filmsListContainerElement = filmsListElement.querySelector(`.films-list__container`);
 
-generalFilms.forEach((it) => {
+films.slice(0, SHOWING_FILMS_ON_START_COUNT).forEach((it) => {
   renderComponent(filmsListContainerElement, createFilmCardTemplate(it));
 });
+
 renderComponent(filmsListElement, createShowMoreButtonTemplate());
+
+const loadMoreButton = filmsListElement.querySelector(`.films-list__show-more`);
+
+let showingFilmsCount = SHOWING_FILMS_BY_BUTTON_COUNT;
+let prevFilmsCount = SHOWING_FILMS_ON_START_COUNT < FILMS_COUNT ? SHOWING_FILMS_ON_START_COUNT : FILMS_COUNT;
+
+loadMoreButton.addEventListener(`click`, () => {
+  showingFilmsCount += SHOWING_FILMS_BY_BUTTON_COUNT;
+
+  films.slice(prevFilmsCount, showingFilmsCount)
+    .forEach((film) => renderComponent(filmsListContainerElement, createFilmCardTemplate(film), `beforeend`));
+
+  prevFilmsCount += SHOWING_FILMS_BY_BUTTON_COUNT;
+
+  if (showingFilmsCount >= films.length) {
+    loadMoreButton.remove();
+  }
+});
 
 
 //  Top rated films
@@ -87,4 +104,4 @@ mostCommentedFilms.forEach((it) => {
 
 
 // Popup
-renderComponent(siteBodyElement, createFilmDetailsPopupTemplate(generalFilms[0]));
+renderComponent(siteBodyElement, createFilmDetailsPopupTemplate(films[0]));
