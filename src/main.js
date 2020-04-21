@@ -3,7 +3,7 @@ import {generateFilms} from './mock/films.js';
 import {generateFilters} from './mock/filter.js';
 
 import {createFilmCardTemplate} from './components/film-card.js';
-// import {createFilmDetailsPopupTemplate} from './components/film-details-popup.js';
+import {createFilmDetailsPopupTemplate} from './components/film-details-popup.js';
 import {createFilmsListContainerTemplate} from './components/films-list.js';
 import {createFilmsSectionTemplate} from './components/films-section.js';
 import {createHeaderProfileTemplate} from './components/header-profile.js';
@@ -17,7 +17,7 @@ const GENERAL_FILMS_COUNT = 5;
 const TOP_RATED_FILMS_COUNT = 2;
 const MOST_COMMENTED_FILMS_COUNT = 2;
 
-// const siteBodyElement = document.querySelector(`body`);
+const siteBodyElement = document.querySelector(`body`);
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
 
@@ -87,4 +87,4 @@ mostCommentedFilms.forEach((it) => {
 
 
 // Popup
-// renderComponent(siteBodyElement, createFilmDetailsPopupTemplate());
+renderComponent(siteBodyElement, createFilmDetailsPopupTemplate(generalFilms[0]));
