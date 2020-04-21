@@ -21,12 +21,19 @@ const EMOHI_IMGS = [
 ];
 
 const getRandomDate = () => {
-  const targetDate = new Date();
-  const diffValue = getRandomInteger(0, 8);
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth() - getRandomInteger(0, 2);
+  const date = getRandomInteger(0, currentDate.getDate());
+  let hours = getRandomInteger(0, 23);
+  let minutes = getRandomInteger(0, 59);
 
-  targetDate.setDate(targetDate.getDate() - diffValue);
+  if (currentDate === new Date(year, month, date)) {
+    hours = getRandomInteger(0, currentDate.getHours());
+    minutes = getRandomInteger(0, currentDate.getMinutes());
+  }
 
-  return targetDate;
+  return new Date(year, month, date, hours, minutes);
 };
 
 const generateComment = () => {
