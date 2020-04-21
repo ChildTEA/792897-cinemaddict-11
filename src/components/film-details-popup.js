@@ -1,3 +1,7 @@
+/*
+Если фильм относится к нескольким жанрам, выводите «Genres», иначе «Genre»
+*/
+
 const createFilmDetailsPopupTemplate = () => {
   return (
     `<section class="film-details">

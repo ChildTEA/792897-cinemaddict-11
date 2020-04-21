@@ -102,6 +102,9 @@ const generateFilm = () => {
     description: getRandomLorem(MAX_SENTENCES_IN_DESCRIPTION),
     mpaaRating: getRandomArrayItem(MPAA_RATINGS),
     comments: generateComments(getRandomNumber(5)),
+    isWatchlist: Math.random() > 0.5,
+    isHistory: Math.random() > 0.5,
+    isFavorite: Math.random() > 0.5,
   };
 };
 

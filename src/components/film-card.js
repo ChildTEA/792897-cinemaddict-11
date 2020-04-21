@@ -1,6 +1,6 @@
 const createFilmCardTemplate = (film) => {
   const clonedFilm = Object.assign({}, film);
-  const {title, rating, release, duration, genres, comments, poster, description} = clonedFilm;
+  const {title, rating, release, duration, genres, comments, poster, description, isWatchlist, isHistory, isFavorite} = clonedFilm;
   const posterPath = `./images/posters/`;
 
   return (
@@ -17,9 +17,9 @@ const createFilmCardTemplate = (film) => {
       `${description.slice(0, 139)}...` : description}</p>
       <a class="film-card__comments">${comments.length} comment${comments.length > 1 ? `s` : ``}</a>
       <form class="film-card__controls">
-        <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
-        <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
-        <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
+        <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist${isWatchlist ? ` film-card__controls-item--active` : ``}">Add to watchlist</button>
+        <button class="film-card__controls-item button film-card__controls-item--mark-as-watched${isHistory ? ` film-card__controls-item--active` : ``}">Mark as watched</button>
+        <button class="film-card__controls-item button film-card__controls-item--favorite${isFavorite ? ` film-card__controls-item--active` : ``}">Mark as favorite</button>
       </form>
     </article>`
   );

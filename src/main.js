@@ -1,5 +1,6 @@
 import {getRandomArrayItems} from './util.js';
 import {generateFilms} from './mock/films.js';
+import {generateFilters} from './mock/filter.js';
 
 import {createFilmCardTemplate} from './components/film-card.js';
 // import {createFilmDetailsPopupTemplate} from './components/film-details-popup.js';
@@ -45,7 +46,8 @@ renderComponent(siteHeaderElement, createHeaderProfileTemplate());
 
 
 // Main navigation
-renderComponent(siteMainElement, createMainNavigationTemplate());
+const filters = generateFilters(films);
+renderComponent(siteMainElement, createMainNavigationTemplate(filters));
 
 
 // Films catalog
