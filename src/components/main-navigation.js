@@ -3,12 +3,12 @@ const capitalizeFirstLetter = (string) => {
 };
 
 const createMainNavigationTemplate = (filters) => {
-  const nagigationItemsMarkup = filters.map((it, i) => createNavigationFilterItem(it, i === 0)).join(`\n`);
+  const navigationItemsMarkup = filters.map((it, i) => createNavigationFilterItem(it, i === 0)).join(`\n`);
 
   return (
     `<nav class="main-navigation">
       <div class="main-navigation__items">
-      ${nagigationItemsMarkup}
+      ${navigationItemsMarkup}
       </div>
       <a href="#stats" class="main-navigation__additional">Stats</a>
     </nav>
