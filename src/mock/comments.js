@@ -13,7 +13,7 @@ const AUTHORS = [
   `Priya Burks`
 ];
 
-const EMOHI_IMGS = [
+const EMOJI_IMGS = [
   `angry.png`,
   `puke.png`,
   `sleeping.png`,
@@ -40,7 +40,7 @@ const generateComment = () => {
   return {
     author: getRandomArrayItem(AUTHORS),
     date: getRandomDate(),
-    emoji: getRandomArrayItem(EMOHI_IMGS),
+    emoji: getRandomArrayItem(EMOJI_IMGS),
     text: getRandomLorem(1),
   };
 };

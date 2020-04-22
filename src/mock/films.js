@@ -1,110 +1,120 @@
-import {castFilmDuration, getRandomNumber, getRandomLorem, getRandomArrayItem} from '../util.js';
+import {castFilmDuration, getRandomNumber, getRandomInteger, getRandomLorem, getRandomArrayItem, getRandomArrayItems} from '../util.js';
 import {generateComments} from './comments.js';
 
 const MAX_SENTENCES_IN_DESCRIPTION = 5;
 
-const FILMS_ITEMS = [
-  {
-    title: `Made for each other`,
-    poster: `made-for-each-other.png`,
-    director: [`David O. Selznick`],
-    writers: [`Rose Franken`, `Jo Swerling`, `Frank Ryan`],
-    cast: [`Carole Lombard`, `James Stewart`],
-    release: new Date(1939, 1, 10),
-    duration: `92`,
-    country: `United States`,
-    genres: [`Comedy`, `Drama`, `Romance`],
-  },
-  {
-    title: `Popeye meets sinbad`,
-    poster: `popeye-meets-sinbad.png`,
-    director: [`Dave Fleischer`, `Willard Bowsky`],
-    writers: [`Max Fleischer`, `Adolph Zukor`],
-    cast: [`Jack Mercer`, `Mae Questel`, `Gus Wickie`, `Lou Fleischer`],
-    release: new Date(1936, 10, 27),
-    duration: `16`,
-    country: `United States`,
-    genres: [`Animation`, `Short`, `Adventure`],
-  },
-  {
-    title: `Sagebrush trail`,
-    poster: `sagebrush-trail.jpg`,
-    director: [`Armand Schaefer`],
-    writers: [`Lindsley Parsons`, `Lindsley Parsons`],
-    cast: [`John Wayne`, `Nancy Shubert`, `Lane Chandler`],
-    release: new Date(1933, 11, 15),
-    duration: `54`,
-    country: `United States`,
-    genres: [`Action`, `Drama`, `Romance`],
-  },
-  {
-    title: `Santa Claus conquers the martians`,
-    poster: `santa-claus-conquers-the-martians.jpg`,
-    director: [`Nicholas Webster`],
-    writers: [`Glenville Mareth`, `Paul L. Jacobson`],
-    cast: [`John Call`, `Leonard Hicks`, `Vincent Beck`],
-    release: new Date(1964, 10, 14),
-    duration: `81`,
-    country: `United States`,
-    genres: [`Adventure`, `Comedy`, `Family`],
-  },
-  {
-    title: `The dance of life`,
-    poster: `the-dance-of-life.jpg`,
-    director: [`John Cromwell`, `Edward Sutherland`],
-    writers: [`Benjamin Glazer`, `Arthur Hopkins`],
-    cast: [`Hal Skelly`, `Nancy Carroll`, `Dorothy Revier`],
-    release: new Date(1929, 6, 16),
-    duration: `115`,
-    country: `United States`,
-    genres: [`Drama`, `Musical`, `Romance`],
-  },
-  {
-    title: `The great flamarion`,
-    poster: `the-great-flamarion.jpg`,
-    director: [`Anthony Mann`],
-    writers: [`Anne Wigton`, `Heinz Herald`],
-    cast: [`Erich von Stroheim`, `Mary Beth Hughes`, `Dan Duryea`],
-    release: new Date(1945, 2, 30),
-    duration: `78`,
-    country: `United States`,
-    genres: [`Drama`, `Film-Noir`, `Mystery`],
-  },
-  {
-    title: `The man with the golden arm`,
-    poster: `the-man-with-the-golden-arm.jpg`,
-    director: [`Otto Preminger`],
-    writers: [`Walter Newman`, `Lewis Meltzer`],
-    cast: [`Frank Sinatra`, `Kim Novak`, `Eleanor Parker`],
-    release: new Date(1956, 0, 16),
-    duration: `119`,
-    country: `United States`,
-    genres: [`Crime`, `Drama`, `Film-Noir`],
-  },
+const FILMS_TITLES = [
+  `Made for each other`,
+  `Popeye meets sinbad`,
+  `Sagebrush trail`,
+  `Santa Claus conquers the martians`,
+  `The dance of life`,
+  `The great flamarion`,
+  `The man with the golden arm`
 ];
 
-const MPAA_RATINGS = [`G`, `PG`, `PG-13`, `R`, `NC-17`];
+const FILMS_POSTERS = [
+  `made-for-each-other.png`,
+  `popeye-meets-sinbad.png`,
+  `sagebrush-trail.jpg`,
+  `santa-claus-conquers-the-martians.jpg`,
+  `the-dance-of-life.jpg`,
+  `the-great-flamarion.jpg`,
+  `the-man-with-the-golden-arm.jpg`
+];
+
+const FILMS_DIRECTORS = [
+  `David O. Selznick`,
+  `Dave Fleischer`,
+  `Willard Bowsky`,
+  `Armand Schaefer`,
+  `Nicholas Webster`,
+  `John Cromwell`,
+  `Edward Sutherland`
+];
+
+const FILMS_WRITERS = [
+  `Rose Franken`,
+  `Jo Swerling`,
+  `Frank Ryan`,
+  `Max Fleischer`,
+  `Adolph Zukor`,
+  `Glenville Mareth`,
+  `Paul L. Jacobson`
+];
+
+const FILMS_ACTORS = [
+  `Carole Lombard`,
+  `James Stewart`,
+  `Jack Mercer`,
+  `Mae Questel`,
+  `Gus Wickie`,
+  `Lou Fleischer`,
+  `Nancy Carroll`
+];
+
+const COUNTRIES_ABBREVIATIONS = [
+  `AU`,
+  `IN`,
+  `JP`,
+  `USA`,
+  `UK`,
+  `USSR`,
+];
+
+const FILMS_GENRES = [
+  `Adventure`,
+  `Animation`,
+  `Comedy`,
+  `Drama`,
+  `Family`,
+  `Romance`,
+  `Short`,
+];
+
+const MPAA_RATINGS = [
+  `G`,
+  `PG`,
+  `PG-13`,
+  `R`,
+  `NC-17`
+];
+
+const getRandomFilmDate = () => {
+  const year = getRandomInteger(1900, 2000);
+  const month = getRandomNumber(11);
+  let date;
+
+  if (month === 1) {
+    date = date = getRandomNumber(28);
+  } else {
+    date = getRandomNumber(30);
+  }
+
+  return new Date(year, month, date);
+};
 
 const generateFilm = () => {
-  const film = getRandomArrayItem(FILMS_ITEMS);
 
   return {
-    title: film.title,
-    poster: film.poster,
-    rating: getRandomNumber(100) / 10,
-    director: film.director,
-    writers: film.writers,
-    cast: film.cast,
-    release: film.release,
-    duration: castFilmDuration(film.duration),
-    country: film.country,
-    genres: film.genres,
-    description: getRandomLorem(MAX_SENTENCES_IN_DESCRIPTION),
-    mpaaRating: getRandomArrayItem(MPAA_RATINGS),
+    cast: getRandomArrayItems(FILMS_ACTORS, getRandomNumber(3)),
     comments: generateComments(getRandomNumber(5)),
-    isWatchlist: Math.random() > 0.5,
-    isHistory: Math.random() > 0.5,
+    country: getRandomArrayItem(COUNTRIES_ABBREVIATIONS),
+    description: getRandomLorem(MAX_SENTENCES_IN_DESCRIPTION),
+    director: getRandomArrayItems(FILMS_DIRECTORS, 1),
+    duration: castFilmDuration(getRandomInteger(20, 240)),
+    genres: getRandomArrayItems(FILMS_GENRES, getRandomInteger(2, 3)),
     isFavorite: Math.random() > 0.5,
+    isHistory: Math.random() > 0.5,
+    isWatchlist: Math.random() > 0.5,
+    mpaaRating: getRandomArrayItem(MPAA_RATINGS),
+    poster: getRandomArrayItem(FILMS_POSTERS),
+    rating: getRandomNumber(100) / 10,
+    release: getRandomFilmDate(),
+    title: getRandomArrayItem(FILMS_TITLES),
+    titleOriginal: getRandomArrayItem(FILMS_TITLES),
+    writers: getRandomArrayItems(FILMS_WRITERS, getRandomNumber(3)),
+
   };
 };
 

@@ -1,3 +1,22 @@
+const indexToMonth = {
+  '0': `January`,
+  '1': `February`,
+  '2': `March`,
+  '3': `April`,
+  '4': `May`,
+  '5': `June`,
+  '6': `July`,
+  '7': `August`,
+  '8': `September`,
+  '9': `October`,
+  '10': `November`,
+  '11': `December`,
+};
+
+const getFilmReleaseDate = (date) => {
+  return `${date.getFullYear()} ${indexToMonth[date.getMonth()]} ${date.getDate()}`;
+};
+
 const createGenresMarkup = (genres) => {
   return genres.map((it) => `<span class="film-details__genre" wfd-id="43">${it}</span>`)
     .join(`\n`);
@@ -35,7 +54,7 @@ const createCommentsMarkup = (comments) => {
 
 const createFilmDetailsPopupTemplate = (film) => {
   const POSTER_PATH = `./images/posters/`;
-  const {poster, title, mpaaRating, rating, director, writers, cast, release, duration, country, genres, description, isWatchlist, isHistory, isFavorite, comments} = film;
+  const {poster, title, titleOriginal, mpaaRating, rating, director, writers, cast, release, duration, country, genres, description, isWatchlist, isHistory, isFavorite, comments} = film;
 
   return (
     `<section class="film-details">
@@ -55,7 +74,7 @@ const createFilmDetailsPopupTemplate = (film) => {
               <div class="film-details__info-head">
                 <div class="film-details__title-wrap">
                   <h3 class="film-details__title">${title}</h3>
-                  <p class="film-details__title-original">${title}</p>
+                  <p class="film-details__title-original">${titleOriginal}</p>
                 </div>
 
                 <div class="film-details__rating">
@@ -78,7 +97,7 @@ const createFilmDetailsPopupTemplate = (film) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">${release}</td>
+                  <td class="film-details__cell">${getFilmReleaseDate(release)}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>

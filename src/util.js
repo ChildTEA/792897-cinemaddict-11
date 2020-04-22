@@ -23,14 +23,14 @@ const getRandomInteger = function (min, max) {
 
 const shuffleArray = function (array) {
   const clonedItems = array.concat();
-  let j;
-  let temp;
+
   for (let i = clonedItems.length - 1; i > 0; i--) {
-    j = Math.floor(Math.random() * (i + 1));
-    temp = clonedItems[j];
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = clonedItems[j];
     clonedItems[j] = clonedItems[i];
     clonedItems[i] = temp;
   }
+
   return clonedItems;
 };
 
