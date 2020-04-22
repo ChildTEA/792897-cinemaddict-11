@@ -26,9 +26,7 @@ const shuffleArray = function (array) {
 
   for (let i = clonedItems.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    const temp = clonedItems[j];
-    clonedItems[j] = clonedItems[i];
-    clonedItems[i] = temp;
+    [clonedItems[i], clonedItems[j]] = [clonedItems[j], clonedItems[i]];
   }
 
   return clonedItems;
