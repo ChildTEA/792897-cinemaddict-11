@@ -1,3 +1,5 @@
+import {createElement} from '../util.js';
+
 const createFilmCardTemplate = (film) => {
   const clonedFilm = Object.assign({}, film);
   const {title, rating, release, duration, genres, comments, poster, description, isWatchlist, isHistory, isFavorite} = clonedFilm;
@@ -25,4 +27,25 @@ const createFilmCardTemplate = (film) => {
   );
 };
 
-export {createFilmCardTemplate};
+export default class FilmCard {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCardTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

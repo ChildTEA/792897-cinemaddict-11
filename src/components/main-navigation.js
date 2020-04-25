@@ -1,5 +1,16 @@
+import {createElement} from '../util.js';
+
 const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+const createNavigationFilterItem = (filter, isActive) => {
+  return (
+    `<a href="#${filter.name}" class="main-navigation__item${isActive ?
+      ` main-navigation__item--active` : ``}">
+      ${filter.name === `all` ? `All movies` : `${capitalizeFirstLetter(filter.name)} <span class="main-navigation__item-count">${filter.count}</span>`}
+      </a>`
+  );
 };
 
 const createMainNavigationTemplate = (filters) => {
@@ -16,13 +27,26 @@ const createMainNavigationTemplate = (filters) => {
   );
 };
 
-const createNavigationFilterItem = (filter, isActive) => {
-  return (
-    `<a href="#${filter.name}" class="main-navigation__item${isActive ?
-      ` main-navigation__item--active` : ``}">
-      ${filter.name === `all` ? `All movies` : `${capitalizeFirstLetter(filter.name)} <span class="main-navigation__item-count">${filter.count}</span>`}
-      </a>`
-  );
-};
 
-export {createMainNavigationTemplate};
+export default class MainNavigation {
+  constructor(filters) {
+    this._filters = filters;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createMainNavigationTemplate(this._filters);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

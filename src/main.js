@@ -1,15 +1,16 @@
 import {generateFilms} from './mock/films.js';
 import {generateFilters} from './mock/filter.js';
 
-import {createFilmCardTemplate} from './components/film-card.js';
-import {createFilmDetailsPopupTemplate} from './components/film-details-popup.js';
-import {createFilmsListContainerTemplate} from './components/films-list.js';
-import {createFilmsSectionTemplate} from './components/films-section.js';
-import {createHeaderProfileTemplate} from './components/header-profile.js';
-import {createMainNavigationTemplate} from './components/main-navigation.js';
-import {createMostCommentedFilmsTemplate} from './components/most-commented-films.js';
-import {createShowMoreButtonTemplate} from './components/show-more-button.js';
-import {createTopRatedFilmsTemplate} from './components/top-rated-films.js';
+import {positionToRenderPosition, renderComponent} from './util.js';
+import FilmCardComponent from './components/film-card.js';
+import FilmDetailsComponent from './components/film-details.js';
+import FilmsListComponent from './components/films-list.js';
+import FilmsSectionComponent from './components/films-section.js';
+import HeaderProfileComponent from './components/header-profile.js';
+import MainNavigationComponent from './components/main-navigation.js';
+import MostCommentedFilmsComponent from './components/most-commented-films.js';
+import ShowMoreButtonComponent from './components/show-more-button.js';
+import TopRatedFilmsComponent from './components/top-rated-films.js';
 
 const FILMS_COUNT = 20;
 const SHOWING_FILMS_ON_START_COUNT = 5;
@@ -35,36 +36,32 @@ const mostCommentedFilms = films
   })
   .slice(0, MOST_COMMENTED_FILMS_COUNT);
 
-const renderComponent = (container, template, place = `beforeend`) => {
-  container.insertAdjacentHTML(place, template);
-};
-
 // Site header
-renderComponent(siteHeaderElement, createHeaderProfileTemplate());
+renderComponent(siteHeaderElement, new HeaderProfileComponent().getElement());
 
 
 // Main navigation
 const filters = generateFilters(films);
-renderComponent(siteMainElement, createMainNavigationTemplate(filters));
+renderComponent(siteMainElement, new MainNavigationComponent(filters).getElement());
 
 
 // Films catalog
 
 // Basic films
-renderComponent(siteMainElement, createFilmsSectionTemplate());
+renderComponent(siteMainElement, new FilmsSectionComponent().getElement());
 
 const filmsElement = siteMainElement.querySelector(`section.films`);
 
-renderComponent(filmsElement, createFilmsListContainerTemplate());
+renderComponent(filmsElement, new FilmsListComponent().getElement());
 
 const filmsListElement = filmsElement.querySelector(`.films-list`);
 const filmsListContainerElement = filmsListElement.querySelector(`.films-list__container`);
 
 films.slice(0, SHOWING_FILMS_ON_START_COUNT).forEach((it) => {
-  renderComponent(filmsListContainerElement, createFilmCardTemplate(it));
+  renderComponent(filmsListContainerElement, new FilmCardComponent(it).getElement());
 });
 
-renderComponent(filmsListElement, createShowMoreButtonTemplate());
+renderComponent(filmsListElement, new ShowMoreButtonComponent().getElement());
 
 const loadMoreButton = filmsListElement.querySelector(`.films-list__show-more`);
 
@@ -75,7 +72,7 @@ loadMoreButton.addEventListener(`click`, () => {
   showingFilmsCount += SHOWING_FILMS_BY_BUTTON_COUNT;
 
   films.slice(prevFilmsCount, showingFilmsCount)
-    .forEach((film) => renderComponent(filmsListContainerElement, createFilmCardTemplate(film), `beforeend`));
+    .forEach((film) => renderComponent(filmsListContainerElement, new FilmCardComponent(film).getElement(), positionToRenderPosition.BEFOREEND));
 
   prevFilmsCount += SHOWING_FILMS_BY_BUTTON_COUNT;
 
@@ -86,22 +83,22 @@ loadMoreButton.addEventListener(`click`, () => {
 
 
 //  Top rated films
-renderComponent(filmsElement, createTopRatedFilmsTemplate());
+renderComponent(filmsElement, new TopRatedFilmsComponent().getElement());
 
 const topRatedFilmsListElement = filmsElement.querySelector(`#top-rated-films-list`);
 
 topRatedFilms.forEach((it) => {
-  renderComponent(topRatedFilmsListElement, createFilmCardTemplate(it));
+  renderComponent(topRatedFilmsListElement, new FilmCardComponent(it).getElement());
 });
 
-renderComponent(filmsElement, createMostCommentedFilmsTemplate());
+renderComponent(filmsElement, new MostCommentedFilmsComponent().getElement());
 
 const mostCommentedFilmsListElement = filmsElement.querySelector(`#most-commented-films-list`);
 
 mostCommentedFilms.forEach((it) => {
-  renderComponent(mostCommentedFilmsListElement, createFilmCardTemplate(it));
+  renderComponent(mostCommentedFilmsListElement, new FilmCardComponent(it).getElement());
 });
 
 
 // Popup
-renderComponent(siteBodyElement, createFilmDetailsPopupTemplate(films[0]));
+renderComponent(siteBodyElement, new FilmDetailsComponent(films[0]).getElement());
