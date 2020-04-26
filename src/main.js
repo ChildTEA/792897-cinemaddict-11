@@ -36,7 +36,7 @@ const renderFilm = (container, film) => {
 
   const filmDetailsComponent = new FilmDetailsComponent(film);
   const popupCloseButton = filmDetailsComponent.getElement().querySelector(`.film-details__close-btn`);
-  const showFilmDetails = () => {
+  const onFilmCardClick = () => {
     renderComponent(siteBodyElement, filmDetailsComponent.getElement());
 
     popupCloseButton.addEventListener(`click`, () => {
@@ -53,9 +53,9 @@ const renderFilm = (container, film) => {
   const filmTitle = filmCardComponent.getElement().querySelector(`.film-card__title`);
   const filmCommentsLink = filmCardComponent.getElement().querySelector(`.film-card__comments`);
 
-  filmPoster.addEventListener(`click`, showFilmDetails);
-  filmTitle.addEventListener(`click`, showFilmDetails);
-  filmCommentsLink.addEventListener(`click`, showFilmDetails);
+  filmPoster.addEventListener(`click`, onFilmCardClick);
+  filmTitle.addEventListener(`click`, onFilmCardClick);
+  filmCommentsLink.addEventListener(`click`, onFilmCardClick);
 
   renderComponent(container, filmCardComponent.getElement());
 };
