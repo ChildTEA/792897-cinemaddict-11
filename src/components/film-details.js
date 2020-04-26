@@ -1,3 +1,5 @@
+import {createElement} from '../util.js';
+
 const indexToMonth = {
   '0': `January`,
   '1': `February`,
@@ -175,4 +177,26 @@ const createFilmDetailsPopupTemplate = (film) => {
   );
 };
 
-export {createFilmDetailsPopupTemplate};
+
+export default class FilmDetails {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmDetailsPopupTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
