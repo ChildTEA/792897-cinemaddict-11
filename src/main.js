@@ -1,7 +1,7 @@
 import {generateFilms} from './mock/films.js';
 import {generateFilters} from './mock/filter.js';
 
-import {render} from './utils/render-component.js';
+import {render, remove} from './utils/render-component.js';
 import NoFilmsComponent from './components/no-films.js';
 import FilmCardComponent from './components/film-card.js';
 import FilmDetailsComponent from './components/film-details.js';
@@ -71,7 +71,9 @@ const renderBasicFilms = (container, films) => {
     renderFilm(filmsListContainerElement, it);
   });
 
-  render(filmsListElement.getElement(), new ShowMoreButtonComponent());
+  const showmorebutton = new ShowMoreButtonComponent();
+
+  render(filmsListElement.getElement(), showmorebutton);
 
   const loadMoreButton = filmsListElement.getElement().querySelector(`.films-list__show-more`);
 
@@ -87,7 +89,7 @@ const renderBasicFilms = (container, films) => {
     prevFilmsCount += SHOWING_FILMS_BY_BUTTON_COUNT;
 
     if (showingFilmsCount >= films.length) {
-      loadMoreButton.remove();
+      remove(showmorebutton);
     }
   });
 };
