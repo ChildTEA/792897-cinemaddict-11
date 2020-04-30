@@ -3,13 +3,13 @@ const positionToRenderPosition = {
   BEFOREEND: `beforeend`
 };
 
-const renderComponent = (container, element, place = positionToRenderPosition.BEFOREEND) => {
+const render = (container, component, place = positionToRenderPosition.BEFOREEND) => {
   switch (place) {
     case positionToRenderPosition.AFTERBEGIN:
-      container.prepend(element);
+      container.prepend(component.getElement());
       break;
     case positionToRenderPosition.BEFOREEND:
-      container.append(element);
+      container.append(component.getElement());
       break;
   }
 };
@@ -21,4 +21,4 @@ const createElement = (template) => {
   return newElement.firstChild;
 };
 
-export {positionToRenderPosition, createElement, renderComponent};
+export {positionToRenderPosition, createElement, render};

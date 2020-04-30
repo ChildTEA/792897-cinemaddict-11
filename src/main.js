@@ -1,7 +1,7 @@
 import {generateFilms} from './mock/films.js';
 import {generateFilters} from './mock/filter.js';
 
-import {renderComponent} from './utils/render-component.js';
+import {render} from './utils/render-component.js';
 import NoFilmsComponent from './components/no-films.js';
 import FilmCardComponent from './components/film-card.js';
 import FilmDetailsComponent from './components/film-details.js';
@@ -38,7 +38,7 @@ const renderFilm = (container, film) => {
   const filmDetailsComponent = new FilmDetailsComponent(film);
   const popupCloseButton = filmDetailsComponent.getElement().querySelector(`.film-details__close-btn`);
   const onFilmCardClick = () => {
-    renderComponent(siteBodyElement, filmDetailsComponent.getElement());
+    render(siteBodyElement, filmDetailsComponent);
 
     popupCloseButton.addEventListener(`click`, () => {
       filmDetailsComponent.getElement().remove();
@@ -58,12 +58,12 @@ const renderFilm = (container, film) => {
   filmTitle.addEventListener(`click`, onFilmCardClick);
   filmCommentsLink.addEventListener(`click`, onFilmCardClick);
 
-  renderComponent(container, filmCardComponent.getElement());
+  render(container, filmCardComponent);
 };
 
 const renderBasicFilms = (container, films) => {
   const filmsListElement = new FilmsListComponent();
-  renderComponent(container, filmsListElement.getElement());
+  render(container, filmsListElement);
 
   const filmsListContainerElement = filmsListElement.getElement().querySelector(`.films-list__container`);
 
@@ -71,7 +71,7 @@ const renderBasicFilms = (container, films) => {
     renderFilm(filmsListContainerElement, it);
   });
 
-  renderComponent(filmsListElement.getElement(), new ShowMoreButtonComponent().getElement());
+  render(filmsListElement.getElement(), new ShowMoreButtonComponent());
 
   const loadMoreButton = filmsListElement.getElement().querySelector(`.films-list__show-more`);
 
@@ -93,22 +93,22 @@ const renderBasicFilms = (container, films) => {
 };
 
 const renderExtraFilms = (container, topRatedFilms, mostCommentedFilms) => {
-  renderComponent(container, new TopRatedFilmsComponent().getElement());
+  render(container, new TopRatedFilmsComponent());
   const topRatedFilmsListElement = container.querySelector(`#top-rated-films-list`);
   topRatedFilms.forEach((it) => renderFilm(topRatedFilmsListElement, it));
 
-  renderComponent(container, new MostCommentedFilmsComponent().getElement());
+  render(container, new MostCommentedFilmsComponent());
   const mostCommentedFilmsListElement = container.querySelector(`#most-commented-films-list`);
   mostCommentedFilms.forEach((it) => renderFilm(mostCommentedFilmsListElement, it));
 };
 
 const renderFilmsCatalog = (films) => {
-  renderComponent(siteMainElement, new FilmsSectionComponent().getElement());
+  render(siteMainElement, new FilmsSectionComponent());
   const filmsElement = siteMainElement.querySelector(`section.films`);
 
   if (films.length === 0) {
     const noFilmsElement = new NoFilmsComponent();
-    renderComponent(filmsElement, noFilmsElement.getElement());
+    render(filmsElement, noFilmsElement);
     return;
   }
 
@@ -132,12 +132,12 @@ const films = generateFilms(FILMS_COUNT);
 
 
 // Site header
-renderComponent(siteHeaderElement, new HeaderProfileComponent().getElement());
+render(siteHeaderElement, new HeaderProfileComponent());
 
 
 // Main navigation
 const filters = generateFilters(films);
-renderComponent(siteMainElement, new MainNavigationComponent(filters).getElement());
+render(siteMainElement, new MainNavigationComponent(filters));
 
 renderFilmsCatalog(films);
 
