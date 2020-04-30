@@ -1,9 +1,5 @@
-import {lorem} from './const.js';
+import {lorem} from '../const.js';
 
-const positionToRenderPosition = {
-  AFTERBEGIN: `afterbegin`,
-  BEFOREEND: `beforeend`
-};
 
 const castTimeFormat = (value) => {
   return value < 10 ? `0${value}` : String(value);
@@ -14,13 +10,6 @@ const castFilmDuration = (duration) => {
   const minutes = duration % 60;
 
   return `${hours ? `${hours}h ` : ``}${minutes ? `${minutes}m` : ``}`;
-};
-
-const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
-
-  return newElement.firstChild;
 };
 
 const getRandomNumber = function (number) {
@@ -65,15 +54,5 @@ const getRandomLorem = (limit) => {
   return result + `.`;
 };
 
-const renderComponent = (container, element, place = positionToRenderPosition.BEFOREEND) => {
-  switch (place) {
-    case positionToRenderPosition.AFTERBEGIN:
-      container.prepend(element);
-      break;
-    case positionToRenderPosition.BEFOREEND:
-      container.append(element);
-      break;
-  }
-};
 
-export {positionToRenderPosition, castTimeFormat, castFilmDuration, createElement, getRandomNumber, getRandomInteger, getRandomArrayItem, getRandomArrayItems, getRandomLorem, renderComponent};
+export {castTimeFormat, castFilmDuration, getRandomNumber, getRandomInteger, getRandomArrayItem, getRandomArrayItems, getRandomLorem};

@@ -1,4 +1,4 @@
-import {castFilmDuration, getRandomNumber, getRandomInteger, getRandomLorem, getRandomArrayItem, getRandomArrayItems} from '../util.js';
+import {castFilmDuration, getRandomNumber, getRandomInteger, getRandomLorem, getRandomArrayItem, getRandomArrayItems} from '../utils/common.js';
 import {generateComments} from './comments.js';
 
 const MAX_SENTENCES_IN_DESCRIPTION = 5;

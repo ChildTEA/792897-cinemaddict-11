@@ -1,4 +1,4 @@
-import {getRandomArrayItem, getRandomInteger, getRandomLorem} from '../util.js';
+import {getRandomArrayItem, getRandomInteger, getRandomLorem} from '../utils/common.js';
 
 const AUTHORS = [
   `Tim Macoveev`,
