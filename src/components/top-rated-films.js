@@ -11,12 +11,7 @@ const createTopRatedFilmsTemplate = () => {
 
 
 export default class TopRatedFilms extends AbstractComponent {
-  constructor(film) {
-    super();
-    this._film = film;
-  }
-
   getTemplate() {
-    return createTopRatedFilmsTemplate(this._film);
+    return createTopRatedFilmsTemplate();
   }
 }

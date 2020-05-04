@@ -49,7 +49,7 @@ const renderFilm = (container, film) => {
 };
 
 
-export default class FilmCatalog {
+export default class Page {
   constructor(container) {
     this._container = container;
 
