@@ -139,7 +139,7 @@ export default class Page {
       let showingFilmsCount = SHOWING_FILMS_BY_BUTTON_COUNT;
       let prevFilmsCount = SHOWING_FILMS_ON_START_COUNT < films.length ? SHOWING_FILMS_ON_START_COUNT : films.length;
 
-      renderShowMoreButton(filmsListContainerElement);
+      renderShowMoreButton();
     };
 
 
@@ -176,7 +176,7 @@ export default class Page {
       .slice(0, MOST_COMMENTED_FILMS_COUNT);
 
 
-    renderBasicFilms(this._filmsSectionComponent.getElement(), sortedFilms);
+    renderBasicFilms(this._filmsSectionComponent.getElement());
     renderExtraFilms(this._filmsSectionComponent.getElement(), topRatedFilms, mostCommentedFilms);
   }
 }
