@@ -75,6 +75,10 @@ const getSortedFilms = (films, sortType) => {
 export default class Page {
   constructor(container) {
     this._container = container;
+    this._films = [];
+    this._showedFilmsControllers = [];
+    // this._basicFilmsCount = 0;
+    this._showedFilmsCount = SHOWING_FILMS_ON_START_COUNT;
 
     this._sortComponent = new SortComponent();
     this._showmorebuttonComponent = new ShowMoreButtonComponent();
@@ -87,30 +91,9 @@ export default class Page {
 
   render(films) {
     let sortedFilms = getSortedFilms(films, SortType.DEFAULT);
+    this._basicFilmsCount = sortedFilms.length;
 
     const renderBasicFilms = (container) => {
-      const renderShowMoreButton = () => {
-        if (films.length <= showingFilmsCount) {
-          return;
-        }
-
-        render(this._filmsListComponent.getElement(), this._showmorebuttonComponent);
-
-        this._showmorebuttonComponent.setButtonClickHandler(() => {
-          showingFilmsCount += SHOWING_FILMS_BY_BUTTON_COUNT;
-
-          sortedFilms.slice(prevFilmsCount, showingFilmsCount).
-            forEach((film) => renderFilm(filmsListContainerElement, film));
-
-          prevFilmsCount += SHOWING_FILMS_BY_BUTTON_COUNT;
-
-          if (showingFilmsCount >= films.length) {
-            remove(this._showmorebuttonComponent);
-          }
-        });
-      };
-
-
       render(container, this._sortComponent);
       render(container, this._filmsListComponent);
 
@@ -126,9 +109,8 @@ export default class Page {
           renderFilm(filmsListContainerElement, it);
         });
 
-        showingFilmsCount = SHOWING_FILMS_BY_BUTTON_COUNT;
-        prevFilmsCount = SHOWING_FILMS_ON_START_COUNT;
-        renderShowMoreButton();
+        this._showedFilmsCount = SHOWING_FILMS_ON_START_COUNT;
+        this._renderShowMoreButton(sortedFilms);
       });
 
 
@@ -136,10 +118,8 @@ export default class Page {
         renderFilm(filmsListContainerElement, it);
       });
 
-      let showingFilmsCount = SHOWING_FILMS_BY_BUTTON_COUNT;
-      let prevFilmsCount = SHOWING_FILMS_ON_START_COUNT < films.length ? SHOWING_FILMS_ON_START_COUNT : films.length;
-
-      renderShowMoreButton();
+      this._showedFilmsCount = SHOWING_FILMS_ON_START_COUNT;
+      this._renderShowMoreButton(sortedFilms);
     };
 
 
@@ -178,5 +158,29 @@ export default class Page {
 
     renderBasicFilms(this._filmsSectionComponent.getElement());
     renderExtraFilms(this._filmsSectionComponent.getElement(), topRatedFilms, mostCommentedFilms);
+  }
+
+
+  _renderShowMoreButton(films) {
+    if (films.length <= this._showedFilmsCount) {
+      return;
+    }
+
+    const filmsListContainerElement = this._filmsSectionComponent.getElement().querySelector(`.films-list__container`);
+    this._showedFilmsCount += SHOWING_FILMS_BY_BUTTON_COUNT;
+
+    render(this._filmsListComponent.getElement(), this._showmorebuttonComponent);
+
+    this._showmorebuttonComponent.setButtonClickHandler(() => {
+      const prevFilmsCount = this._showedFilmsCount;
+      this._showedFilmsCount += SHOWING_FILMS_BY_BUTTON_COUNT;
+
+      films.slice(prevFilmsCount, this._showedFilmsCount).
+        forEach((film) => renderFilm(filmsListContainerElement, film));
+
+      if (this._showedFilmsCount >= films.length) {
+        remove(this._showmorebuttonComponent);
+      }
+    });
   }
 }
