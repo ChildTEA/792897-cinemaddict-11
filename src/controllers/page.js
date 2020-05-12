@@ -15,9 +15,9 @@ const TOP_RATED_FILMS_COUNT = 2;
 const MOST_COMMENTED_FILMS_COUNT = 2;
 
 
-const renderFilms = (filmsListContainerElement, films) => {
+const renderFilms = (filmsListContainerElement, films, onDataChange, onViewChange) => {
   return films.map((film) => {
-    const filmController = new FilmController(filmsListContainerElement);
+    const filmController = new FilmController(filmsListContainerElement, onDataChange, onViewChange);
 
     filmController.render(film);
 
@@ -64,7 +64,9 @@ export default class Page {
     this._noFilmsComponent = new NoFilmsComponent();
     this._filmsSectionComponent = new FilmsSectionComponent();
 
+    this._onDataChange = this._onDataChange.bind(this);
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
+    this._onViewChange = this._onViewChange.bind(this);
 
     this._sortComponent.setSortTypeChangeHandler(this._onSortTypeChange);
   }
@@ -79,9 +81,8 @@ export default class Page {
       const filmsListContainerElement = this._filmsListComponent.getElement().querySelector(`.films-list__container`);
 
       const filmsToRender = this._films.slice(0, SHOWING_FILMS_ON_START_COUNT);
-      const newFilms = renderFilms(filmsListContainerElement, filmsToRender);
+      this._showedFilmsControllers = renderFilms(filmsListContainerElement, filmsToRender, this._onDataChange, this._onViewChange);
 
-      this._showedFilmsControllers = newFilms;
       this._showedFilmsCount = SHOWING_FILMS_ON_START_COUNT;
 
       this._renderShowMoreButton(this._films);
@@ -92,11 +93,13 @@ export default class Page {
       render(container, this._mostCommentedFilmsComponent);
 
       const topRatedFilmsListElement = this._topRatedFilmsComponent.getElement().querySelector(`#top-rated-films-list`);
-      this._extraFilmsControllers.concat(renderFilms(topRatedFilmsListElement, topRatedFilms));
+
+      this._extraFilmsControllers = this._extraFilmsControllers.concat(renderFilms(topRatedFilmsListElement, topRatedFilms, this._onDataChange, this._onViewChange));
 
       render(container, this._mostCommentedFilmsComponent);
       const mostCommentedFilmsListElement = this._mostCommentedFilmsComponent.getElement().querySelector(`#most-commented-films-list`);
-      this._extraFilmsControllers.concat(renderFilms(mostCommentedFilmsListElement, mostCommentedFilms));
+
+      this._extraFilmsControllers = this._extraFilmsControllers.concat(renderFilms(mostCommentedFilmsListElement, mostCommentedFilms, this._onDataChange, this._onViewChange));
     };
 
 
@@ -138,12 +141,29 @@ export default class Page {
       this._showedFilmsCount += SHOWING_FILMS_BY_BUTTON_COUNT;
 
       const filmsToRender = films.slice(prevFilmsCount, this._showedFilmsCount);
-      this._showedFilmsControllers.concat(renderFilms(filmsListContainerElement, filmsToRender));
+      this._showedFilmsControllers = this._showedFilmsControllers.concat(renderFilms(filmsListContainerElement, filmsToRender, this._onDataChange, this._onViewChange));
 
       if (this._showedFilmsCount >= films.length) {
         remove(this._showmorebuttonComponent);
       }
     });
+  }
+
+  _onDataChange(filmController, oldData, newData) {
+    const index = this._films.findIndex((it) => it === oldData);
+
+    if (index === -1) {
+      return;
+    }
+
+    this._films = [...this._films.slice(0, index), newData, ...this._films.slice(index + 1)];
+
+    filmController.render(this._films[index]);
+  }
+
+  _onViewChange() {
+    this._showedFilmsControllers.forEach((it) => it.setDefaultView());
+    this._extraFilmsControllers.forEach((it) => it.setDefaultView());
   }
 
   _onSortTypeChange(sortType) {
@@ -154,7 +174,7 @@ export default class Page {
     remove(this._showmorebuttonComponent);
 
     const filmsToRender = this._films.slice(0, SHOWING_FILMS_ON_START_COUNT);
-    this._showedFilmsControllers = renderFilms(filmsListContainerElement, filmsToRender);
+    this._showedFilmsControllers = renderFilms(filmsListContainerElement, filmsToRender, this._onDataChange, this._onViewChange);
 
     this._showedFilmsCount = SHOWING_FILMS_ON_START_COUNT;
     this._renderShowMoreButton(this._films);

@@ -1,4 +1,4 @@
-import AbstractComponent from './abstract-component.js';
+import AbstractSmartComponent from './abstract-smart-component.js';
 
 const indexToMonth = {
   '0': `January`,
@@ -178,18 +178,85 @@ const createFilmDetailsPopupTemplate = (film) => {
 };
 
 
-export default class FilmDetails extends AbstractComponent {
+export default class FilmDetails extends AbstractSmartComponent {
   constructor(film) {
     super();
     this._film = film;
+
+    this.recoveryListeners();
+
   }
 
   getTemplate() {
     return createFilmDetailsPopupTemplate(this._film);
   }
 
+
+  recoveryListeners() {
+    this.onEmojiLabelClick();
+  }
+
+
   setCloseButtonClickHandler(handler) {
-    const popupCloseButton = this.getElement().querySelector(`.film-details__close-btn`);
+    const popupCloseButton = this.getElement()
+      .querySelector(`.film-details__close-btn`);
+
     popupCloseButton.addEventListener(`click`, handler);
+
+    this._closeButtonClickHandler = handler;
+  }
+
+  setWatchlistClickHandler(handler) {
+    const checkbox = this.getElement()
+      .querySelector(`#watchlist`);
+    const label = this.getElement().querySelector(`.film-details__control-label--watchlist`);
+
+
+    checkbox.addEventListener(`click`, handler);
+    label.addEventListener(`click`, handler);
+
+    this._watchlistClickHandler = handler;
+  }
+
+  setWatchedClickHandler(handler) {
+    const checkbox = this.getElement()
+      .querySelector(`#watched`);
+    const label = this.getElement().querySelector(`.film-details__control-label--watched`);
+
+
+    checkbox.addEventListener(`click`, handler);
+    label.addEventListener(`click`, handler);
+
+    this._watchedClickHandler = handler;
+  }
+
+  setFavoriteClickHandler(handler) {
+    const checkbox = this.getElement()
+      .querySelector(`#favorite`);
+    const label = this.getElement()
+      .querySelector(`.film-details__control-label--favorite`);
+
+
+    checkbox.addEventListener(`click`, handler);
+    label.addEventListener(`click`, handler);
+
+    this._favoriteClickHandler = handler;
+  }
+
+  onEmojiLabelClick() {
+    const outputContainer = this.getElement()
+    .querySelector(`.film-details__add-emoji-label`);
+    const emojiList = this.getElement()
+    .querySelector(`.film-details__emoji-list`);
+
+    emojiList.addEventListener(`click`, (evt) => {
+      if (evt.target.tagName === `INPUT`) {
+        const input = evt.target;
+        const emoji = evt.target.value;
+
+        input.checked = true;
+        outputContainer.innerHTML = `<img src="./images/emoji/${emoji}.png" width="55" height="55" alt="emoji">`;
+      }
+    });
   }
 }
