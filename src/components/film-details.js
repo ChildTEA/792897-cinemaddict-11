@@ -1,4 +1,4 @@
-import AbstractComponent from './abstract-component.js';
+import AbstractSmartComponent from './abstract-smart-component.js';
 
 const indexToMonth = {
   '0': `January`,
@@ -178,18 +178,64 @@ const createFilmDetailsPopupTemplate = (film) => {
 };
 
 
-export default class FilmDetails extends AbstractComponent {
+export default class FilmDetails extends AbstractSmartComponent {
   constructor(film) {
     super();
     this._film = film;
+
+    this.recoveryListeners();
   }
 
   getTemplate() {
     return createFilmDetailsPopupTemplate(this._film);
   }
 
+  recoveryListeners() {
+    this.onEmojiLabelClick();
+  }
+
   setCloseButtonClickHandler(handler) {
-    const popupCloseButton = this.getElement().querySelector(`.film-details__close-btn`);
+    const popupCloseButton = this.getElement()
+      .querySelector(`.film-details__close-btn`);
+
     popupCloseButton.addEventListener(`click`, handler);
+  }
+
+  setWatchlistChangeHandler(handler) {
+    const checkbox = this.getElement()
+      .querySelector(`#watchlist`);
+
+    checkbox.addEventListener(`change`, handler);
+  }
+
+  setWatchedChangeHandler(handler) {
+    const checkbox = this.getElement()
+      .querySelector(`#watched`);
+
+    checkbox.addEventListener(`change`, handler);
+  }
+
+  setFavoriteChangeHandler(handler) {
+    const checkbox = this.getElement()
+      .querySelector(`#favorite`);
+
+    checkbox.addEventListener(`change`, handler);
+  }
+
+  onEmojiLabelClick() {
+    const outputContainer = this.getElement()
+    .querySelector(`.film-details__add-emoji-label`);
+    const emojiList = this.getElement()
+    .querySelector(`.film-details__emoji-list`);
+
+    emojiList.addEventListener(`click`, (evt) => {
+      if (evt.target.tagName === `INPUT`) {
+        const input = evt.target;
+        const emoji = evt.target.value;
+
+        input.checked = true;
+        outputContainer.innerHTML = `<img src="./images/emoji/${emoji}.png" width="55" height="55" alt="emoji">`;
+      }
+    });
   }
 }
