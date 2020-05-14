@@ -184,63 +184,42 @@ export default class FilmDetails extends AbstractSmartComponent {
     this._film = film;
 
     this.recoveryListeners();
-
   }
 
   getTemplate() {
     return createFilmDetailsPopupTemplate(this._film);
   }
 
-
   recoveryListeners() {
     this.onEmojiLabelClick();
   }
-
 
   setCloseButtonClickHandler(handler) {
     const popupCloseButton = this.getElement()
       .querySelector(`.film-details__close-btn`);
 
     popupCloseButton.addEventListener(`click`, handler);
-
-    this._closeButtonClickHandler = handler;
   }
 
-  setWatchlistClickHandler(handler) {
+  setWatchlistChangeHandler(handler) {
     const checkbox = this.getElement()
       .querySelector(`#watchlist`);
-    const label = this.getElement().querySelector(`.film-details__control-label--watchlist`);
 
-
-    checkbox.addEventListener(`click`, handler);
-    label.addEventListener(`click`, handler);
-
-    this._watchlistClickHandler = handler;
+    checkbox.addEventListener(`change`, handler);
   }
 
-  setWatchedClickHandler(handler) {
+  setWatchedChangeHandler(handler) {
     const checkbox = this.getElement()
       .querySelector(`#watched`);
-    const label = this.getElement().querySelector(`.film-details__control-label--watched`);
 
-
-    checkbox.addEventListener(`click`, handler);
-    label.addEventListener(`click`, handler);
-
-    this._watchedClickHandler = handler;
+    checkbox.addEventListener(`change`, handler);
   }
 
-  setFavoriteClickHandler(handler) {
+  setFavoriteChangeHandler(handler) {
     const checkbox = this.getElement()
       .querySelector(`#favorite`);
-    const label = this.getElement()
-      .querySelector(`.film-details__control-label--favorite`);
 
-
-    checkbox.addEventListener(`click`, handler);
-    label.addEventListener(`click`, handler);
-
-    this._favoriteClickHandler = handler;
+    checkbox.addEventListener(`change`, handler);
   }
 
   onEmojiLabelClick() {

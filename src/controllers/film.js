@@ -59,19 +59,19 @@ export default class FilmController extends AbstractComponent {
       document.removeEventListener(`keydown`, this._onEscKeyDown);
     });
 
-    this._filmDetailsComponent.setWatchlistClickHandler(() => {
+    this._filmDetailsComponent.setWatchlistChangeHandler(() => {
       this._onDataChange(this, film, Object.assign({}, film, {
         isWatchlist: !film.isWatchlist,
       }));
     });
 
-    this._filmDetailsComponent.setWatchedClickHandler(() => {
+    this._filmDetailsComponent.setWatchedChangeHandler(() => {
       this._onDataChange(this, film, Object.assign({}, film, {
         isHistory: !film.isHistory,
       }));
     });
 
-    this._filmDetailsComponent.setFavoriteClickHandler(() => {
+    this._filmDetailsComponent.setFavoriteChangeHandler(() => {
       this._onDataChange(this, film, Object.assign({}, film, {
         isFavorite: !film.isFavorite,
       }));
