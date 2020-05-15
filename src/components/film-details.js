@@ -1,23 +1,6 @@
+import {formatDate, getRelativeDate} from '../utils/common.js';
 import AbstractSmartComponent from './abstract-smart-component.js';
 
-const indexToMonth = {
-  '0': `January`,
-  '1': `February`,
-  '2': `March`,
-  '3': `April`,
-  '4': `May`,
-  '5': `June`,
-  '6': `July`,
-  '7': `August`,
-  '8': `September`,
-  '9': `October`,
-  '10': `November`,
-  '11': `December`,
-};
-
-const getFilmReleaseDate = (date) => {
-  return `${date.getFullYear()} ${indexToMonth[date.getMonth()]} ${date.getDate()}`;
-};
 
 const createGenresMarkup = (genres) => {
   return genres.map((it) => `<span class="film-details__genre" wfd-id="43">${it}</span>`)
@@ -30,10 +13,6 @@ const createCommentsMarkup = (comments) => {
     return imageFullName.split(`.`, 1)[0];
   };
 
-  const getCommentTime = (date) => {
-    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
-  };
-
   return comments.map((it) => {
     return (
       `<li class="film-details__comment">
@@ -44,7 +23,7 @@ const createCommentsMarkup = (comments) => {
           <p class="film-details__comment-text">${it.text}</p>
           <p class="film-details__comment-info">
             <span class="film-details__comment-author">${it.author}</span>
-            <span class="film-details__comment-day">${getCommentTime(it.date)}</span>
+            <span class="film-details__comment-day">${getRelativeDate(it.date)}</span>
             <button class="film-details__comment-delete">Delete</button>
           </p>
         </div>
@@ -99,7 +78,7 @@ const createFilmDetailsPopupTemplate = (film) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">${getFilmReleaseDate(release)}</td>
+                  <td class="film-details__cell">${formatDate(release)}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>

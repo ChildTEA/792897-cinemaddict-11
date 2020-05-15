@@ -1,4 +1,5 @@
 import {lorem} from '../const.js';
+import moment from 'moment';
 
 
 const castTimeFormat = (value) => {
@@ -33,6 +34,10 @@ const shuffleArray = function (array) {
   return clonedItems;
 };
 
+const formatDate = (date) => {
+  return moment(date).format(`YYYY MMMM DD`);
+};
+
 const getRandomArrayItems = (arr, count) => {
   return shuffleArray(arr).slice(0, count);
 };
@@ -54,5 +59,12 @@ const getRandomLorem = (limit) => {
   return result + `.`;
 };
 
+const getRelativeDate = (date) => {
+  return moment(date).fromNow();
+};
 
-export {castTimeFormat, castFilmDuration, getRandomNumber, getRandomInteger, getRandomArrayItem, getRandomArrayItems, getRandomLorem};
+const getYear = (date) => {
+  return moment(date).format(`YYYY`);
+};
+
+export {castTimeFormat, castFilmDuration, formatDate, getRandomNumber, getRandomInteger, getRandomArrayItem, getRandomArrayItems, getRandomLorem, getRelativeDate, getYear};
