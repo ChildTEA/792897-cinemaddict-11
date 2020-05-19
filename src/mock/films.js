@@ -97,6 +97,7 @@ const getRandomFilmDate = () => {
 const generateFilm = () => {
 
   return {
+    id: String(new Date() + Math.random()),
     cast: getRandomArrayItems(FILMS_ACTORS, getRandomNumber(3)),
     comments: generateComments(getRandomNumber(5)),
     country: getRandomArrayItem(COUNTRIES_ABBREVIATIONS),
