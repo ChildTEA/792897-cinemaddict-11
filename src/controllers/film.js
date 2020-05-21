@@ -1,4 +1,4 @@
-import {render, replace} from '../utils/render-component.js';
+import {render, remove, replace} from '../utils/render-component.js';
 import AbstractComponent from '../components/abstract-component.js';
 import FilmCardComponent from '../components/film-card.js';
 import FilmDetailsComponent from '../components/film-details.js';
@@ -24,6 +24,12 @@ export default class FilmController extends AbstractComponent {
 
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
     this._onMoverCardClick = this._onMoverCardClick.bind(this);
+  }
+
+  destroy() {
+    remove(this._filmCardComponent);
+    remove(this._filmDetailsComponent);
+    document.removeEventListener(`keydown`, this._onEscKeyDown);
   }
 
   render(film) {

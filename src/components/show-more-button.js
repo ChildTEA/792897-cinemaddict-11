@@ -15,4 +15,8 @@ export default class ShowMoreButton extends AbstractComponent {
   setButtonClickHandler(handler) {
     this.getElement().addEventListener(`click`, handler);
   }
+
+  isElement() {
+    return Boolean(this._element);
+  }
 }

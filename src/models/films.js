@@ -34,7 +34,7 @@ export default class Films {
           break;
       }
 
-      return this._sortedFilms;
+      getFilmsByFilter(this._sortedFilms, this._activeFilterType);
     }
 
     return getFilmsByFilter(this._sortedFilms, this._activeFilterType);
