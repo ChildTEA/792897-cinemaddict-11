@@ -14,27 +14,23 @@ export default class Films {
   }
 
   getFilms(sortType = this._sortType) {
-    if (sortType !== this._sortType || this._sortedFilms.length === 0) {
-      this._sortedFilms = [];
-      this._sortType = sortType;
-      const clonedFilms = this._films.slice();
+    this._sortedFilms = [];
+    this._sortType = sortType;
+    const clonedFilms = this._films.slice();
 
-      switch (sortType) {
-        case SortType.DATE:
-          this._sortedFilms = clonedFilms.sort((a, b) => b.release - a.release);
-          break;
-        case SortType.RATING:
-          this._sortedFilms = clonedFilms.sort((a, b) => b.rating - a.rating);
-          break;
-        case SortType.DEFAULT:
-          this._sortedFilms = clonedFilms;
-          break;
-        default:
-          this._sortedFilms = clonedFilms;
-          break;
-      }
-
-      getFilmsByFilter(this._sortedFilms, this._activeFilterType);
+    switch (sortType) {
+      case SortType.DATE:
+        this._sortedFilms = clonedFilms.sort((a, b) => b.release - a.release);
+        break;
+      case SortType.RATING:
+        this._sortedFilms = clonedFilms.sort((a, b) => b.rating - a.rating);
+        break;
+      case SortType.DEFAULT:
+        this._sortedFilms = clonedFilms;
+        break;
+      default:
+        this._sortedFilms = clonedFilms;
+        break;
     }
 
     return getFilmsByFilter(this._sortedFilms, this._activeFilterType);
