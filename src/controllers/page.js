@@ -107,8 +107,10 @@ export default class Page {
   }
 
   _onFilterChange() {
+    this._filmsModel.resetSortType();
     this._removeBasicFilms();
     this._updateFilms(SHOWING_FILMS_ON_START_COUNT);
+    this._sortComponent.resetSortType();
   }
 
   _renderShowMoreButton() {

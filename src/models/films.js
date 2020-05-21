@@ -1,4 +1,4 @@
-import {SortType} from '../components/sort.js';
+import {SortType} from '../const.js';
 import {getFilmsByFilter} from '../utils/filter.js';
 import {FilterType} from "../const.js";
 
@@ -43,6 +43,12 @@ export default class Films {
   setFilter(filterType) {
     this._activeFilterType = filterType;
     this._callHandlers(this._filterChangeHandlers);
+  }
+
+  resetSortType() {
+    if (this._sortType !== SortType.DEFAUL) {
+      this._sortType = SortType.DEFAULT;
+    }
   }
 
   setFilms(films) {

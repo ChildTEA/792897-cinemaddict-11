@@ -1,10 +1,5 @@
 import AbstractSmartComponent from '../components/abstract-smart-component.js';
-
-export const SortType = {
-  DATE: `date-down`,
-  RATING: `rating-down`,
-  DEFAULT: `default`,
-};
+import {SortType} from '../const.js';
 
 const createSortTemplate = (currentSortType) => {
 
@@ -35,6 +30,14 @@ export default class Sort extends AbstractSmartComponent {
 
   recoveryListeners() {
     this.setSortTypeChangeHandler(this._sortTypeChangeHandler);
+  }
+
+  resetSortType() {
+    if (this._sortType !== SortType.DEFAUL) {
+      this._currentSortType = SortType.DEFAULT;
+      this._sortType = SortType.DEFAULT;
+      this.rerender();
+    }
   }
 
   setSortTypeChangeHandler(handler) {
